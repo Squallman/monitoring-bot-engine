@@ -41,10 +41,11 @@ jobs:
     - name: Build file
       run: |
         mkdir $TARGET
+        mkdir $TARGET/zakaz_ua
         pip install -r requirements.txt --target mkdir $TARGET
-        cp zakaz_ua $TARGET -r
+        cp zakaz_ua/*.py $TARGET/zakaz_ua -r
         cd $TARGET
-        zip -r ../output.zip zakaz_ua/
+        zip -r ../output.zip $TARGET
     - name: AWS Lambda Deploy
       uses: appleboy/lambda-action@master
       with:
