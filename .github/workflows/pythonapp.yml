@@ -43,11 +43,11 @@ jobs:
       run: |
         zip -r output.zip zakaz_ua/*.py
     - name: AWS Lambda Deploy
-        uses: appleboy/lambda-action
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: ${{ secrets.AWS_REGION }}
-          function_name: zakaz-ua
-          zip_file: output.zip
-          dry_run: true
+      uses: appleboy/lambda-action
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: ${{ secrets.AWS_REGION }}
+        function_name: zakaz-ua
+        zip_file: output.zip
+        dry_run: true
