@@ -1,4 +1,5 @@
-from zakaz_ua import http_helper, user_dao
+from src.zakaz_ua import http_helper
+import user_dao
 
 
 def fetch_users(token):

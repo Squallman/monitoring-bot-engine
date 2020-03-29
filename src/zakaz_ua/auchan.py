@@ -1,4 +1,5 @@
-from zakaz_ua import auchan_dao, http_helper
+from src.zakaz_ua import http_helper
+import auchan_dao
 
 data_key = 'data'
 items_key = 'items'

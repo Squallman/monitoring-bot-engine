@@ -1,4 +1,6 @@
-from zakaz_ua import users, auchan, http_helper
+from src.zakaz_ua import http_helper
+import users
+import auchan
 import os
 import json
 
@@ -17,3 +19,9 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps('Success')
     }
+
+lambda_handler({}, {})
+# https://eztmber9qe.execute-api.us-east-1.amazonaws.com/telegram_api
+# TOKEN=513357203:AAFB39a1t-mwyO2Eu318rEhgr6zLlTE1woA
+
+# https://api.telegram.org/bot513357203:AAFB39a1t-mwyO2Eu318rEhgr6zLlTE1woA/setWebhook?url=https://eztmber9qe.execute-api.us-east-1.amazonaws.com/telegram_api

@@ -1,6 +1,7 @@
 from unittest import TestCase, mock
 
-from zakaz_ua import users
+import users
+
 
 class UsersTest(TestCase):
 

@@ -45,12 +45,25 @@ jobs:
         pip install -r requirements.txt --target $TARGET
         cp zakaz_ua/*.py $TARGET/zakaz_ua -r
         cd $TARGET
-        zip -r ../output.zip .
-    - name: AWS Lambda Deploy
+        zip -r ../zakaz_ua.zip .
+        rm -rf $TARGET/zakaz_ua
+        mkdir $TARGET/user_handler
+        cp zakaz_ua/*.py $TARGET/zakaz_ua -r
+        cd $TARGET
+        zip -r ../user_handler.zip .
+    - name: AWS Lambda Deploy Zakaz ua
       uses: appleboy/lambda-action@master
       with:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws_region: ${{ secrets.AWS_REGION }}
         function_name: zakaz_ua
-        zip_file: output.zip
+        zip_file: zakaz_ua.zip
+    - name: AWS Lambda Deploy User Handler
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          function_name: user_handler
+          zip_file: user_handler.zip
