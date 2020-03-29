@@ -29,19 +29,20 @@ jobs:
     - name: Build file zakaz_ua
       run: |
         mkdir $TARGET
+        mkdir $TARGET/zakaz_ua
         pip install -r requirements.txt --target $TARGET
-        cp zakaz_ua/*.py $TARGET -r
-        cd $TARGET
-        zip -r ../zakaz_ua.zip .
+        cp zakaz_ua/*.py $TARGET/zakaz_ua -r
+        cd $TARGET/zakaz_ua
+        zip -r ../../zakaz_ua.zip .
+        cd ../..
     - name: Build file user_handler
       run: |
-        rm -rf $TARGET/*
-        ls $TARGET
+        mkdir $TARGET/user_handler
         pip install -r requirements.txt --target $TARGET
-        cd $TARGET
-        cp user_handler/*.py $TARGET -r
-        zip -r ../user_handler.zip .
-        rm -rf $TARGET/
+        cp user_handler/*.py $TARGET/user_handler -r
+        cd $TARGET/user_handler
+        zip -r ../../user_handler.zip .
+        cd ../..
     - name: AWS Lambda Deploy Zakaz ua
       uses: appleboy/lambda-action@master
       with:
