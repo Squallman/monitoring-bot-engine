@@ -36,6 +36,7 @@ jobs:
         rm -rf $TARGET/
     - name: Build file user_handler
       run: |
+        ls $TARGET
         mkdir $TARGET
         pip install -r requirements.txt --target $TARGET
         cd $TARGET
