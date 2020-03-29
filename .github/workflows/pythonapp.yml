@@ -27,7 +27,7 @@ jobs:
         flake8 zakaz_ua --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 zakaz_ua --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Build file
+    - name: Build file zakaz_ua
       run: |
         mkdir $TARGET
         mkdir $TARGET/zakaz_ua
@@ -35,11 +35,16 @@ jobs:
         cp zakaz_ua/*.py $TARGET/zakaz_ua -r
         cd $TARGET
         zip -r ../zakaz_ua.zip .
-        rm -rf $TARGET/zakaz_ua
+        rm -rf $TARGET
+    - name: Build file zakaz_ua
+      run: |
+        mkdir $TARGET
         mkdir $TARGET/user_handler
-        cp user_handler/*.py $TARGET/user_handler -r
+        pip install -r requirements.txt --target $TARGET
         cd $TARGET
+        cp user_handler/*.py $TARGET/user_handler -r
         zip -r ../user_handler.zip .
+        rm -rf $TARGET
     - name: AWS Lambda Deploy Zakaz ua
       uses: appleboy/lambda-action@master
       with:
