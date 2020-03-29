@@ -23,7 +23,7 @@ DB = pymysql.connect(
 
 
 def lambda_handler(event, context):
-
+    print(event)
     if 'message' in event:
         message = event.get('message')
         text = message.get('text') if 'text' in message else ''
@@ -48,6 +48,7 @@ def lambda_handler(event, context):
                 t_message = '👎Looking for available slots was stopped.'
                 telegram_send_message(TOKEN, chat_id, t_message)
         else:
+            print('not right')
             t_message = '🤦Bot doesn\'t support this command, try "start" or "stop".'
             telegram_send_message(TOKEN, chat_id, t_message)
     return {
@@ -76,7 +77,7 @@ def remove_user(user_id):
 
 
 def exists(user_id):
-    sql_query = 'SELECT tbl_user FROM tbl_user WHERE user_id = "%s";'
+    sql_query = 'SELECT user_id FROM tbl_user WHERE user_id = "%s";'
     with DB.cursor() as cursor:
         cursor.execute(sql_query, user_id)
         result = cursor.fetchone()
