@@ -30,7 +30,7 @@ jobs:
       run: |
         mkdir $TARGET
         mkdir $TARGET/zakaz_ua
-        pip install -r requirements.txt --target $TARGET
+        pip install -r requirements.txt --target $TARGET/zakaz_ua
         cp zakaz_ua/*.py $TARGET/zakaz_ua -r
         cd $TARGET/zakaz_ua
         zip -r ../../zakaz_ua.zip .
@@ -38,7 +38,7 @@ jobs:
     - name: Build file user_handler
       run: |
         mkdir $TARGET/user_handler
-        pip install -r requirements.txt --target $TARGET
+        pip install -r requirements.txt --target $TARGET/user_handler
         cp user_handler/*.py $TARGET/user_handler -r
         cd $TARGET/user_handler
         zip -r ../../user_handler.zip .
