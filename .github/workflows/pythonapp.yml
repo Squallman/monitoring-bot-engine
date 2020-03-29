@@ -36,7 +36,7 @@ jobs:
         cd $TARGET
         zip -r ../zakaz_ua.zip .
         rm -rf $TARGET
-    - name: Build file zakaz_ua
+    - name: Build file user_handler
       run: |
         mkdir $TARGET
         mkdir $TARGET/user_handler
