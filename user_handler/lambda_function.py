@@ -1,11 +1,25 @@
 import json
 import os
+import pymysql
 import requests
 
 TELEGRAM_SEND_URL = 'https://api.telegram.org/bot%(token)s/sendMessage?chat_id=%(chat_id)s' \
                     '&parse_mode=Markdown&text=%(message)s'
 
 TOKEN = os.getenv('TOKEN')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT', 3306)
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_DBNAME = os.getenv('DB_DBNAME')
+
+DB = pymysql.connect(
+    host=DB_HOST,
+    port=3306,
+    user=DB_USER,
+    password=DB_PASSWORD,
+    database=DB_DBNAME
+)
 
 
 def lambda_handler(event, context):
@@ -20,11 +34,19 @@ def lambda_handler(event, context):
                         '"start" to start monitoring or "stop" to stop it.'
             telegram_send_message(TOKEN, chat_id, t_message)
         elif 'start' in text.lower():
-            t_message = '👍Looking for available slots was started.'
-            telegram_send_message(TOKEN, chat_id, t_message)
+            if exists(user_id=chat_id):
+                t_message = 'Your id is already in the monitoring list.'
+                telegram_send_message(TOKEN, chat_id, t_message)
+            else:
+                t_message = '👍Looking for available slots was started.'
+                telegram_send_message(TOKEN, chat_id, t_message)
         elif 'stop' in text.lower():
-            t_message = '👎Looking for available slots was stopped.'
-            telegram_send_message(TOKEN, chat_id, t_message)
+            if not exists(user_id=chat_id):
+                t_message = 'Cannot find your id in the monitoring list'
+                telegram_send_message(TOKEN, chat_id, t_message)
+            else:
+                t_message = '👎Looking for available slots was stopped.'
+                telegram_send_message(TOKEN, chat_id, t_message)
         else:
             t_message = '🤦Bot doesn\'t support this command, try "start" or "stop".'
             telegram_send_message(TOKEN, chat_id, t_message)
@@ -37,3 +59,26 @@ def lambda_handler(event, context):
 def telegram_send_message(token, chat_id, message):
     params = {'token': token, 'chat_id': chat_id, 'message': message}
     requests.get(url=TELEGRAM_SEND_URL % params)
+
+
+def add_user(user_id):
+    sql_query = 'INSERT INTO tbl_user (user_id) VALUES (%s);'
+    with DB.cursor() as cursor:
+        cursor.execute(sql_query, user_id)
+    DB.commit()
+
+
+def remove_user(user_id):
+    sql_query = 'DELETE FROM tbl_user WHERE user_id = %s;'
+    with DB.cursor() as cursor:
+        cursor.execute(sql_query, user_id)
+    DB.commit()
+
+
+def exists(user_id):
+    sql_query = 'SELECT FROM tbl_user WHERE user_id = %s;'
+    with DB.cursor() as cursor:
+        cursor.execute(sql_query, user_id)
+        result = cursor.fetchone()
+        print(result)
+        return True if result else False
