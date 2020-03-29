@@ -33,9 +33,9 @@ jobs:
         cp zakaz_ua/*.py $TARGET -r
         cd $TARGET
         zip -r ../zakaz_ua.zip .
-        rm -rf $TARGET/*
     - name: Build file user_handler
       run: |
+        rm -rf $TARGET/*
         ls $TARGET
         pip install -r requirements.txt --target $TARGET
         cd $TARGET
