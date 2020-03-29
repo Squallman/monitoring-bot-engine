@@ -36,9 +36,12 @@ def lambda_handler(event, context):
         elif 'start' in text.lower():
             if exists(user_id=chat_id):
                 t_message = 'Your id is already in the monitoring list.'
+                print(t_message)
                 telegram_send_message(TOKEN, chat_id, t_message)
             else:
                 t_message = '👍Looking for available slots was started.'
+                print(t_message)
+                add_user(chat_id)
                 telegram_send_message(TOKEN, chat_id, t_message)
         elif 'stop' in text.lower():
             if not exists(user_id=chat_id):
@@ -46,6 +49,7 @@ def lambda_handler(event, context):
                 telegram_send_message(TOKEN, chat_id, t_message)
             else:
                 t_message = '👎Looking for available slots was stopped.'
+                remove_user(chat_id)
                 telegram_send_message(TOKEN, chat_id, t_message)
         else:
             print(f'not right, chat_id={chat_id}')
@@ -60,7 +64,9 @@ def lambda_handler(event, context):
 def telegram_send_message(token, chat_id, message):
     params = {'token': token, 'chat_id': chat_id, 'message': message}
     try:
-        response = requests.get(url=TELEGRAM_SEND_URL % params)
+        url = TELEGRAM_SEND_URL % params
+        print(url)
+        response = requests.get(url=url)
         print(f'status_code = {response.status_code}')
         print(f'result = {response.content}')
     except Exception as error:
@@ -68,23 +74,22 @@ def telegram_send_message(token, chat_id, message):
 
 
 def add_user(user_id):
-    sql_query = 'INSERT INTO `tbl_user` (`user_id`) VALUES ("%s");'
+    sql_query = 'INSERT INTO tbl_user (user_id) VALUES (%s);'
     with DB.cursor() as cursor:
         cursor.execute(sql_query, user_id)
     DB.commit()
 
 
 def remove_user(user_id):
-    sql_query = 'DELETE FROM tbl_user WHERE user_id = "%s";'
+    sql_query = 'DELETE FROM tbl_user WHERE user_id = %s;'
     with DB.cursor() as cursor:
         cursor.execute(sql_query, user_id)
     DB.commit()
 
 
 def exists(user_id):
-    sql_query = 'SELECT user_id FROM tbl_user WHERE user_id = "%s";'
+    sql_query = 'SELECT user_id FROM tbl_user WHERE user_id = %s;'
     with DB.cursor() as cursor:
         cursor.execute(sql_query, user_id)
         result = cursor.fetchone()
-        print(result)
         return True if result else False
