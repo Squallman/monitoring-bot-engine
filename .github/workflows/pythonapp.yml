@@ -20,10 +20,6 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt --target zakaz_ua/
     - name: Lint with flake8
       run: |
         pip install flake8
@@ -31,7 +27,10 @@ jobs:
         flake8 zakaz_ua --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 zakaz_ua --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt --target zakaz_ua/
     - name: Install module
       run: |
         cd zakaz_ua
