@@ -30,19 +30,17 @@ jobs:
     - name: Build file zakaz_ua
       run: |
         mkdir $TARGET
-        mkdir $TARGET/zakaz_ua
         pip install -r requirements.txt --target $TARGET
-        cp zakaz_ua/*.py $TARGET/zakaz_ua -r
+        cp zakaz_ua/*.py $TARGET -r
         cd $TARGET
         zip -r ../zakaz_ua.zip .
         rm -rf $TARGET
     - name: Build file user_handler
       run: |
         mkdir $TARGET
-        mkdir $TARGET/user_handler
         pip install -r requirements.txt --target $TARGET
         cd $TARGET
-        cp user_handler/*.py $TARGET/user_handler -r
+        cp user_handler/*.py $TARGET -r
         zip -r ../user_handler.zip .
         rm -rf $TARGET
     - name: AWS Lambda Deploy Zakaz ua
