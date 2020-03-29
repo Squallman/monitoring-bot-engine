@@ -42,7 +42,7 @@ jobs:
       run: |
         mkdir $TARGET
         mkdir $TARGET/zakaz_ua
-        pip install -r requirements.txt --target mkdir $TARGET
+        pip install -r requirements.txt --target $TARGET
         cp zakaz_ua/*.py $TARGET/zakaz_ua -r
         cd $TARGET
         zip -r ../output.zip .
