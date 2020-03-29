@@ -17,16 +17,16 @@ def lambda_handler(event, context):
         chat_id = chat.get('id') if 'id' in chat else ''
         if '/start' in text.lower():
             t_message = 'This bot will help you to find available slots in Zakaz.ua try to put ' \
-                        '"start" to start monitoring or "stop" to stop it'
+                        '"start" to start monitoring or "stop" to stop it.'
             telegram_send_message(TOKEN, chat_id, t_message)
         elif 'start' in text.lower():
-            t_message = '👍Looking for available slots was started'
+            t_message = '👍Looking for available slots was started.'
             telegram_send_message(TOKEN, chat_id, t_message)
         elif 'stop' in text.lower():
-            t_message = '👎Looking for available slots was stoped'
+            t_message = '👎Looking for available slots was stopped.'
             telegram_send_message(TOKEN, chat_id, t_message)
         else:
-            t_message = '🤦Bot doesn\'t support this command, try "start" or "stop"'
+            t_message = '🤦Bot doesn\'t support this command, try "start" or "stop".'
             telegram_send_message(TOKEN, chat_id, t_message)
     return {
         'statusCode': 200,
