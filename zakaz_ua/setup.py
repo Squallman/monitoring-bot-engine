@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="shepel-auchan-ua",
+    name="zakaz_ua",
     version="0.0.1",
     author="Serhii Shepel",
     author_email="serhiy.shepel@gmail.com",
     description="Small module to work with zakaz ua slots",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/Squallman/zakaz-ua",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

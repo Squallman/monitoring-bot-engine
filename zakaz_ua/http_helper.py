@@ -1,4 +1,5 @@
-import requests, json
+import json
+import requests
 
 TELEGRAM_SEND_URL = 'https://api.telegram.org/bot%(token)s/sendMessage?chat_id=%(chat_id)s' \
                     '&parse_mode=Markdown&text=%(message)s'
@@ -14,10 +15,10 @@ def get_auchan_dates(payload):
 
 def telegram_send_message(token, chat_id, message):
     params = {'token': token, 'chat_id': chat_id, 'message': message}
-    requests.get(url=TELEGRAM_SEND_URL%params)
+    requests.get(url=TELEGRAM_SEND_URL % params)
 
 
 def telegram_get_updates(token):
     params = {'token': token}
-    response = requests.get(TELEGRAM_GET_UPDATES_URL%params)
+    response = requests.get(TELEGRAM_GET_UPDATES_URL % params)
     return response.json()

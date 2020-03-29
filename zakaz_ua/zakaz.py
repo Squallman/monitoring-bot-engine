@@ -12,4 +12,3 @@ messages = auchan.get_auchan_changes()
 for user_id in users:
     for message in messages:
         http_helper.telegram_send_message(token, user_id, message)
-
