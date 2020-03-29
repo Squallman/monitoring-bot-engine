@@ -48,7 +48,7 @@ def lambda_handler(event, context):
                 t_message = '👎Looking for available slots was stopped.'
                 telegram_send_message(TOKEN, chat_id, t_message)
         else:
-            print('not right')
+            print(f'not right, chat_id={chat_id}')
             t_message = '🤦Bot doesn\'t support this command, try "start" or "stop".'
             telegram_send_message(TOKEN, chat_id, t_message)
     return {
