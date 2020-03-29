@@ -43,12 +43,12 @@ jobs:
         mkdir $TARGET
         mkdir $TARGET/zakaz_ua
         pip install -r requirements.txt --target $TARGET
-        cp zakaz_ua/*.py $TARGET/zakaz_ua -r
+        cp src/zakaz_ua/*.py $TARGET/zakaz_ua -r
         cd $TARGET
         zip -r ../zakaz_ua.zip .
         rm -rf $TARGET/zakaz_ua
         mkdir $TARGET/user_handler
-        cp zakaz_ua/*.py $TARGET/zakaz_ua -r
+        cp src/user_handler/*.py $TARGET/user_handler -r
         cd $TARGET
         zip -r ../user_handler.zip .
     - name: AWS Lambda Deploy Zakaz ua
