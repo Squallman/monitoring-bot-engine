@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     env:
@@ -34,7 +33,7 @@ jobs:
         cp zakaz_ua/*.py $TARGET -r
         cd $TARGET
         zip -r ../zakaz_ua.zip .
-        rm -rf $TARGET
+        rm -rf $TARGET/
     - name: Build file user_handler
       run: |
         mkdir $TARGET
@@ -42,7 +41,7 @@ jobs:
         cd $TARGET
         cp user_handler/*.py $TARGET -r
         zip -r ../user_handler.zip .
-        rm -rf $TARGET
+        rm -rf $TARGET/
     - name: AWS Lambda Deploy Zakaz ua
       uses: appleboy/lambda-action@master
       with:
