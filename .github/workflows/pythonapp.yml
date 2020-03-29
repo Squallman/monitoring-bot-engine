@@ -41,7 +41,8 @@ jobs:
         python -m unittest discover -s tests -t . -v
     - name: Build file
       run: |
-        zip -r output.zip zakaz_ua/*.py
+        cd zakaz_ua
+        zip -r ../output.zip *.py
     - name: AWS Lambda Deploy
       uses: appleboy/lambda-action@master
       with:
