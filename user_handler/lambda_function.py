@@ -62,21 +62,21 @@ def telegram_send_message(token, chat_id, message):
 
 
 def add_user(user_id):
-    sql_query = 'INSERT INTO tbl_user (user_id) VALUES (%s);'
+    sql_query = 'INSERT INTO `tbl_user` (`user_id`) VALUES ("%s");'
     with DB.cursor() as cursor:
         cursor.execute(sql_query, user_id)
     DB.commit()
 
 
 def remove_user(user_id):
-    sql_query = 'DELETE FROM tbl_user WHERE user_id = %s;'
+    sql_query = 'DELETE FROM `tbl_user` WHERE `user_id` = "%s";'
     with DB.cursor() as cursor:
         cursor.execute(sql_query, user_id)
     DB.commit()
 
 
 def exists(user_id):
-    sql_query = 'SELECT FROM tbl_user WHERE user_id = %s;'
+    sql_query = 'SELECT FROM `tbl_user` WHERE `user_id` = "%s";'
     with DB.cursor() as cursor:
         cursor.execute(sql_query, user_id)
         result = cursor.fetchone()
