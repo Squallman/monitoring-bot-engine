@@ -1,14 +1,19 @@
 from zakaz_ua import users, auchan, http_helper
 import os
+import json
 
 token = os.getenv('TOKEN')
 
-if not token:
-    exit(1)
 
-users = users.fetch_users(token)
-messages = auchan.get_auchan_changes()
+def lambda_handler(event, context):
 
-for user_id in users:
-    for message in messages:
-        http_helper.telegram_send_message(token, user_id, message)
+    user_set = users.fetch_users(token)
+    messages = auchan.get_auchan_changes()
+
+    for user_id in user_set:
+        for message in messages:
+            http_helper.telegram_send_message(token, user_id, message)
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Success')
+    }
