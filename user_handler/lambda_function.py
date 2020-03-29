@@ -59,9 +59,12 @@ def lambda_handler(event, context):
 
 def telegram_send_message(token, chat_id, message):
     params = {'token': token, 'chat_id': chat_id, 'message': message}
-    response = requests.get(url=TELEGRAM_SEND_URL % params)
-    print(f'status_code = {response.status_code}')
-    print(f'result = {response.content}')
+    try:
+        response = requests.get(url=TELEGRAM_SEND_URL % params)
+        print(f'status_code = {response.status_code}')
+        print(f'result = {response.content}')
+    except Exception as error:
+        print(error)
 
 
 def add_user(user_id):
