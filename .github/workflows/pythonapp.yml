@@ -33,7 +33,7 @@ jobs:
         pip install -r requirements.txt
     - name: Install module
       run: |
-        cd zakaz_ua
+        cd src/zakaz_ua
         python setup.py install
     - name: Test with pytest
       run: |
