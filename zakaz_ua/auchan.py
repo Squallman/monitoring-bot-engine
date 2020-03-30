@@ -54,13 +54,13 @@ def perform_auchan_request():
     return [res.get(title_key) for res in auchan_windows if res.get(is_available_key)]
 
 
-def get_auchan_changes():
+def get_auchan_changes(db):
     available_list = perform_auchan_request()
-    previous_list = auchan_dao.get_slots()
+    previous_list = auchan_dao.get_slots(db)
     new_slots = compare_list(available_list, previous_list)
     removed_slots = compare_list(previous_list, available_list)
-    auchan_dao.remove_slots(removed_slots)
-    auchan_dao.add_slots(new_slots)
+    auchan_dao.remove_slots(db, removed_slots)
+    auchan_dao.add_slots(db, new_slots)
     messages = prepare_messages(new_slots, removed_slots)
     return sorted(messages)
 
