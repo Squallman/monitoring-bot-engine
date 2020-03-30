@@ -23,7 +23,7 @@ DB = pymysql.connect(
 
 
 def lambda_handler(event, context):
-    if 'message' in vent:
+    if 'message' in event:
         message = event.get('message')
         text = message.get('text') if 'text' in message else ''
         chat = message.get('chat') if 'chat' in message else ''
