@@ -23,8 +23,7 @@ DB = pymysql.connect(
 
 
 def lambda_handler(event, context):
-    print(event)
-    if 'message' in event:
+    if 'message' in vent:
         message = event.get('message')
         text = message.get('text') if 'text' in message else ''
         chat = message.get('chat') if 'chat' in message else ''
@@ -36,11 +35,9 @@ def lambda_handler(event, context):
         elif 'start' in text.lower():
             if exists(user_id=chat_id):
                 t_message = 'Your id is already in the monitoring list.'
-                print(t_message)
                 telegram_send_message(TOKEN, chat_id, t_message)
             else:
                 t_message = '👍Looking for available slots was started.'
-                print(t_message)
                 add_user(chat_id)
                 telegram_send_message(TOKEN, chat_id, t_message)
         elif 'stop' in text.lower():
@@ -52,7 +49,6 @@ def lambda_handler(event, context):
                 remove_user(chat_id)
                 telegram_send_message(TOKEN, chat_id, t_message)
         else:
-            print(f'not right, chat_id={chat_id}')
             t_message = '🤦Bot doesn\'t support this command, try "start" or "stop".'
             telegram_send_message(TOKEN, chat_id, t_message)
     return {
@@ -63,14 +59,8 @@ def lambda_handler(event, context):
 
 def telegram_send_message(token, chat_id, message):
     params = {'token': token, 'chat_id': chat_id, 'message': message}
-    try:
-        url = TELEGRAM_SEND_URL % params
-        print(url)
-        response = requests.get(url=url)
-        print(f'status_code = {response.status_code}')
-        print(f'result = {response.content}')
-    except Exception as error:
-        print(error)
+    url = TELEGRAM_SEND_URL % params
+    requests.get(url=url)
 
 
 def add_user(user_id):
