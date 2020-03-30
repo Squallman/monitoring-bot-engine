@@ -2,9 +2,11 @@ def get_slots(db):
     sql_query = 'SELECT slot FROM auchan;'
     with db.cursor() as cursor:
         cursor.execute(sql_query)
-        result = cursor.fetchall()
-        print(result)
-        return result
+        messages = cursor.fetchall()
+        print(messages)
+        slots = [message.get('slot') for message in messages]
+        print(slots)
+        return slots
 
 
 def remove_slots(db, slots):
