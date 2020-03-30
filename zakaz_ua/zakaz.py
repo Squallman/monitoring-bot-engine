@@ -5,6 +5,8 @@ import os
 import pymysql
 import json
 
+from pymysql.cursors import DictCursor
+
 token = os.getenv('TOKEN')
 
 DB_HOST = os.getenv('DB_HOST')
@@ -18,7 +20,8 @@ DB = pymysql.connect(
     port=3306,
     user=DB_USER,
     password=DB_PASSWORD,
-    database=DB_NAME
+    database=DB_NAME,
+    cursorclass=DictCursor
 )
 
 
