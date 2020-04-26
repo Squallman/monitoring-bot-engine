@@ -22,7 +22,7 @@ jobs:
           mkdir $TARGET
           mkdir $TARGET/monitoring-bot-engine
           pip install -r requirements.txt --target $TARGET/monitoring-bot-engine
-          cp monitoring-bot-engine/*.py $TARGET/monitoring-bot-engine -r
+          cp monitoring_bot_engine/*.py $TARGET/monitoring-bot-engine -r
           cd $TARGET/monitoring-bot-engine
           zip -r ../../monitoring-bot-engine.zip .
           cd ../..
