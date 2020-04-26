@@ -1,8 +1,8 @@
-name: Run deploy
+name: RunDeploy
 
 on:
   push:
-    branches: [ master ]
+    branches: [ develop ]
 
 jobs:
   build:
@@ -12,32 +12,25 @@ jobs:
       TARGET: 'target'
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
-    - name: Lint with flake8
-      run: |
-        pip install flake8
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 monitoring_bot_engine --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 monitoring_bot_engine --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Build lambda
-      run: |
-        mkdir $TARGET
-        mkdir $TARGET/monitoring_bot_engine
-        pip install -r requirements.txt --target $TARGET/zakaz_ua
-        cp monitoring_bot_engine/*.py $TARGET/monitoring_bot_engine -r
-        cd $TARGET/monitoring_bot_engine
-        zip -r ../../monitoring_bot_engine.zip .
-        cd ../..
-    - name: Deploy lambda
-      uses: appleboy/lambda-action@master
-      with:
-        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws_region: ${{ secrets.AWS_REGION }}
-        function_name: ${{ secrets.MASTER_LAMBDA_NAME }}
-        zip_file: monitoring_bot_engine.zip
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Build lambda
+        run: |
+          mkdir $TARGET
+          mkdir $TARGET/monitoring-bot-engine
+          pip install -r requirements.txt --target $TARGET/monitoring-bot-engine
+          cp monitoring-bot-ui/*.py $TARGET/monitoring-bot-engine -r
+          cd $TARGET/monitoring-bot-engine
+          zip -r ../../monitoring-bot-engine.zip .
+          cd ../..
+      - name: Deploy lambda
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          function_name: ${{ secrets.MASTER_LAMBDA_NAME }}
+          zip_file: monitoring-bot-engine.zip
