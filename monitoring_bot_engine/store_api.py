@@ -23,7 +23,7 @@ def get_store_slots(store_id, store_name, location):
 
 
 def build_store_result_message(slots):
-    slots_by_date = [{slot.copy().pop('date'): slot} for slot in slots if slot.get('is_open')]
+    slots_by_date = [{slot.copy().pop('date'): slot} for slot in slots]
     date_set = set()
     for slot in slots_by_date:
         keys = slot.keys()
