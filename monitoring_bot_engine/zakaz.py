@@ -17,9 +17,11 @@ def lambda_handler(event, context):
     users = user_dao.get_users()
     for user in users:
         user_store_list = [element for element in processed_items
-                           if user.get('store_1') == element.get('store_id')]
+                           if user.get('store_1') == element.get('store_id')
+                           and user.get('store_1_status')]
         user_store_list.extend([element for element in processed_items
-                                if user.get('store_2') == element.get('store_id')])
+                                if user.get('store_2') == element.get('store_id')
+                                and user.get('store_2_status')])
         sorted_list = sorted(user_store_list, key=lambda element: element.get('title'))
         message_list = store_api.build_store_result_message(sorted_list)
         default_message(user.get('chat_id'), message_list)
